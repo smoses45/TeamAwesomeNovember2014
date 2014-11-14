@@ -6,3 +6,7 @@ cd portspoof/
 sudo ./configure --sysconfdir=/etc/
 sudo make
 sudo make install
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 0:21 -j REDIRECT --to-ports 4444
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 23:65535 -j REDIRECT --to-ports 4444
+sudo portspoof -c /etc/portspoof.conf -s /etc/portspoof_signatures -D
+ps -ef | grep spoof
