@@ -1,0 +1,50 @@
+Vyatta
+	default logins
+		vyatta:vyatta
+		root:vyatta
+	show configuration
+	show configuration commands
+	configure
+	Blackhole
+set protocols static route 10.0.0.0/8 blackhole distance '254'
+set protocols static route 172.16.0.0/12 blackhole distance '254'
+set protocols static route 192.168.0.0/16 blackhole distance '254'
+
+set protocols static route subnet blackhole [distance distance]
+show protocols static route subnet blackhole [distance]
+where subnet is in form address/prefix(CIDR)
+
+ip route add blackhole 172.16.0.0/20
+ip route add blackhole 10.0.0.0/8
+ip route add blackhole 192.168.0.0/16
+Disable IPv6
+	set system ipv6 disable
+Firewall (last year we were told NOT to use the firewall settings)
+http://www.rackspace.com/knowledge_center/article/configuring-interface-based-firewall-on-the-vyatta-network-appliance
+http://www.brocade.com/downloads/documents/html_product_manuals/vyatta/vyatta_5400_manual/Quick%20Start/wwhelp/wwhimpl/common/html/wwhelp.htm#href=Quick%20Start%20Configurations.5.28.html&single=true
+
+set firewall state-policy established action ‘accept’
+set firewall state-policy related action ‘accept’
+
+set firewall all-ping ‘disable’
+set firewall broadcast-ping ‘disable’
+set firewall ipv6-receive-redirects ‘disable’
+set firewall ipv6-src-route ‘disable’
+set firewall log-martians ‘enable’
+set firewall receive-redirects ‘disable’
+set firewall sent-redirects ‘disable’
+set firewall source-validation ‘enable’
+set firewall syn-cookies ‘disable’
+
+set firewall name protect-vyatta
+set default-action ‘drop’
+
+set a bunch of rules (see first URL above)
+
+
+Cisco (Blackhole)
+	conf t
+ip route 0.0.0.0  0.0.0.0 null0
+int null0
+no ip unreachables
+
