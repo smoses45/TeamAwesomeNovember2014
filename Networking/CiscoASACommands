@@ -1,0 +1,45 @@
+Threat-Detection
+show running-config all threat-detection 
+sho local-host brief | e limit = 0|unlimited|host = 0|local
+sho shun statistics | i Shun 10\.|Shun 128\.187\.
+sho threat-detection scanning-threat attacker | e 128\.187\.
+sho threat-detection scanning-threat attacker | i 128\.187\.
+sho threat-detection scanning-threat attacker | i 128\.187\.| 10\...\.
+sho threat-detection statistics top tcp-intercept
+
+Other Commands:
+
+threat-detection scanning-threat shun except object-group ShunExceptionsInsideGroup ! enables 
+shunning
+threat-detection scanning-threat shun duration 3600 ! default shun time
+threat-detection basic-threat
+threat-detection statistics
+threat-detection statistics tcp-intercept rate-interval 30 burst-rate 400 average-rate 200
+show running-config all threat-detection    
+threat-detection rate dos-drop rate-interval 600 average-rate 100 burst-rate 400
+threat-detection rate dos-drop rate-interval 3600 average-rate 80 burst-rate 320
+threat-detection rate bad-packet-drop rate-interval 600 average-rate 100 burst-rate 400
+threat-detection rate bad-packet-drop rate-interval 3600 average-rate 80 burst-rate 320
+threat-detection rate acl-drop rate-interval 600 average-rate 400 burst-rate 800
+threat-detection rate acl-drop rate-interval 3600 average-rate 320 burst-rate 640
+threat-detection rate conn-limit-drop rate-interval 600 average-rate 100 burst-rate 400
+threat-detection rate conn-limit-drop rate-interval 3600 average-rate 80 burst-rate 320
+threat-detection rate icmp-drop rate-interval 600 average-rate 100 burst-rate 400
+threat-detection rate icmp-drop rate-interval 3600 average-rate 80 burst-rate 320
+threat-detection rate scanning-threat rate-interval 600 average-rate 5 burst-rate 10
+threat-detection rate scanning-threat rate-interval 3600 average-rate 4 burst-rate 8
+threat-detection rate syn-attack rate-interval 600 average-rate 100 burst-rate 200
+threat-detection rate syn-attack rate-interval 3600 average-rate 80 burst-rate 160
+threat-detection rate fw-drop rate-interval 600 average-rate 400 burst-rate 1600
+threat-detection rate fw-drop rate-interval 3600 average-rate 320 burst-rate 1280
+threat-detection rate inspect-drop rate-interval 600 average-rate 400 burst-rate 1600
+threat-detection rate inspect-drop rate-interval 3600 average-rate 320 burst-rate 1280
+threat-detection rate interface-drop rate-interval 600 average-rate 2000 burst-rate 8000
+threat-detection rate interface-drop rate-interval 3600 average-rate 1600 burst-rate 6400
+threat-detection basic-threat
+threat-detection scanning-threat shun except object-group ShunExceptionsInsideGroup
+threat-detection statistics access-list
+threat-detection statistics host number-of-rate 1
+threat-detection statistics port number-of-rate 1
+threat-detection statistics protocol number-of-rate 1
+threat-detection statistics tcp-intercept rate-interval 30 burst-rate 400 average-rate 200
