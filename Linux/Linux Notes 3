@@ -1,0 +1,202 @@
+Fail2Ban
+        	sudo apt-get update
+        	sudo apt-get install fail2ban
+        	
+        	cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+        	in /etc/fail2ban/jail.local
+                    	bantime = 86400
+                    	findtime - 300
+                    	destemail = <ccdc email>
+                    	
+        	
+        	
+Services/Daemons
+        	list all running services
+                    	 service --status-all
+        	list services and ports
+                    	netstat -tulpn
+        	start service
+                    	service <service name> start
+        	stop service
+                    	service <service name> stop
+        	turn on service
+                    	chkconfig <service name> on
+        	turn off service
+                    	chkconfig <service name> off
+                    	
+permissions
+                    	change the permissions of the file   	
+                    	user, group, and world
+                    	*4 - read (r)
+                    	*2 - write (w)
+                    	*1 - execute (x)
+                    	Examples:
+                                	chmod 777 - read, write, execute for all
+                                	chmod 755 - rwx for owner, rx for group and world
+        	
+linux users
+        	Change a users password (logged in as that user)
+                    	passwd
+                                	then prompts for old, then new twice
+        	list them
+                    	 cut -d : -f 1 /etc/passwd
+        	delete them
+                    	delete user
+                                	sudo userdel <username>
+                    	remove home directory
+                    	        	sudo rm -r /home/<username>
+        	
+        	Just in case (we can if we want set up other for ssh then set root to help with man in the middle attacks)
+                    	add user       	
+                                	sudo adduser <username>
+                                	
+IPTables
+        	run file, not stored there
+        	debian based
+                    	status
+                                	sudo ufw status
+                    	stop
+                                	sudo ufw disable
+                    	start
+                                	sudo ufw enable
+                    	restart
+                                	sudo ufw reload
+        	rehl based (could be in /etc/init.d)
+                    	status
+                                	service iptables status
+                    	stop
+                                	service iptables stop
+                    	start
+                                	service iptables start
+                    	restart
+                                	service iptables restart
+        	
+        	print present configuration
+                    	sudo iptables -L
+        	accpet ssh
+                    	sudo iptables -A INPUT -s <source ip> -p tcp --dport ssh -j ACCEPT
+        	clear iptables (do not run this by hand.  Will lock everyone out of the machine)
+                    	sudo iptables --flush
+SCRIPT!!!    	
+
+#!/bin/bash
+
+#clear
+sudo iptables --flush
+
+#ssh
+sudo iptables -A INPUT -p tcp --dport ssh -j ACCEPT
+sudo iptables -A INPUT -s 192.168.190.116 -p tcp --dport ssh -j ACCEPT
+
+#RDP
+#sudo iptables -A INPUT -s 192.168.1.0/24 -d 192.168.0.0/24 --dport 3389 -j ACCEPT
+#sudo iptables -A INPUT -d 192.169.1.0/24 --dport 3389 -j REJECT
+
+#Webserver
+sudo iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT #http
+sudo iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT #https
+
+#tomcat
+sudo iptables -A INPUT -p tcp -m tcp --dport 8080 -j ACCEPT #tomcat
+
+#SMTP
+sudo iptables -A INPUT -p tcp -m tcp --dport 25 -j ACCEPT #SMTP nonsecure
+sudo iptables -A INPUT -p tcp -m tcp --dport 465 -j ACCEPT #SMTPs secure
+
+#POP3
+sudo iptables -A INPUT -p tcp -m tcp --dport 110 -j ACCEPT #nonsecure & nonecrypted
+sudo iptables -A INPUT -p tcp -m tcp --dport 995 -j ACCEPT #secure
+
+#IMAP
+sudo iptables -A INPUT -p tcp -m tcp --dport 143 -j ACCEPT #nonsecure & nonecrypted
+sudo iptables -A INPUT -p tcp -m tcp --dport 993 -j ACCEPT #secure
+
+#FTP Active
+sudo iptables -A INPUT -p tcp --dport 21 -j ACCEPT #client initates connection
+#sudo iptables -A OUTPUT -p tcp --sport 20 -j ACCEPT #server initates connection
+
+#FTP PASSIVE
+#sudo iptables -A INPUT -p tcp --dport 1023 -j ACCEPT #client initates connection
+
+#PPTP VPN
+sudo iptables -A INPUT -p tcp -m tcp --dport 1723 -j ACCEPT
+sudo iptables -A INPUT -p tcp -m tcp --dport 47 -j ACCEPT
+
+#openvpn 1194
+sudo iptables -A INPUT -p tcp -m tcp --dport 1194 -j ACCEPT
+
+#L2TP
+sudo iptables -A INPUT -p udp -m udp --dport 1701 -j ACCEPT
+sudo iptables -A INPUT -p udp -m udp --dport 500 -j ACCEPT
+
+#Established or Related connections
+sudo iptables -I INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+#fail2ban
+sudo iptables -N fail2ban-ssh
+sudo iptables -A fail2ban-ssh -j RETURN
+sudo iptables -I INPUT -p tcp --dport ssh -j fail2ban-ssh
+ 
+                    	
+Monitoring Logs
+        	Tail -f
+                    	This will keep a log open and will print things as they are happening
+                    	
+                    	
+ 
+Limiting SSH
+        	/etc/ssh/sshd_config
+                    	Port 1776
+                    	PermitRootLogin no (still need to test)
+                    	AllowUsers <usersname>
+        	debian
+                    	service ssh restart or /etc/init.d/ssh restart
+        	
+        	hosts.allow
+                    	/etc/hosts.allow
+                    	sshd: \
+                                	<ipaddress> \
+                                	<ipaddress>
+        	hosts.deny
+                    	/etc/hosts.deny
+                    	sshd: all
+                    	
+                    	
+Regenerate OpenSSH
+        	Delete old ssh host keys
+                    	/bin/rm -v /etc/ssh/ssh_host_*
+        	Reconfigure OpenSSH server
+                    	dpkg-reconfigure openssh-server
+        	Update ssh clients
+                    	ssh-keygen -R remote-server-name-here
+                    	
+Regenerate OpenSSL
+        	RSA key
+                    	openssl genrsa -des3 -out privkey.pem 2048
+        	DSA key
+                    	openssl dsaparam -out dsaparam.pem 2048
+                    	openssl gendsa -des3 -out privkey.pem dsaparam.pem
+ 
+Cron job
+sudo su
+apt-get install nmap
+cd /root
+put nmap -n --reason -T4 -p 22,80,443 -sV 192.168.243.42 > /root/$(date +"%T") in a file called nmapscript
+chmod +x nmapscript
+crontab -e
+add */10 * * * * /root/nmapscript to end of file
+ 
+portspoof
+        	sudo apt-get install git
+        	sudo apt-get install g++
+cd /usr/share
+sudo git clone https://github.com/drk1wi/portspoof
+cd portspoof/
+sudo ./configure --sysconfdir=/etc/
+sudo make
+sudo make install
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 0:21 -j REDIRECT --to-ports 4444
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport 23:65535 -j REDIRECT --to-ports 4444
+sudo portspoof -c /etc/portspoof.conf -s /etc/portspoof_signatures -D
+ps -ef | grep spoo
+
