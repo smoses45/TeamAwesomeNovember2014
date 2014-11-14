@@ -1,0 +1,38 @@
+General
+  Assign computers for password reset	
+  Build Network Map	
+  
+Windows Checklist	
+  Reset passwords for all accounts	
+  Firewall rules for non-essential services/ports	
+  Updates and patches to operating system	
+  List of users/accounts AD/local	
+  Only accept traffic to/from managed servers	
+  Monitor logs	
+  Backup windows firewall	
+  Backup Databases	
+  Backup website/CMS	
+  Is notepad.exe running?	
+  processes monitoring	
+  sysinternals?	
+  Group policies	
+  Domain troller changed first
+
+Linux Checklist	
+  Reset password for all accounts	
+  Firewall rules for non-essential services/ports	
+  Updates and patches to operating system	
+  List of users/accounts	
+  Monitor audit/sys logs	
+  Only accept traffic to/from managed servers	
+  Backup iptables	
+  Backup databases	
+  Backup website/CMS
+
+Network Checklist	
+  Reset passwords for all accounts	
+  Firewall rules for non-essential services/ports	
+  IPv6 off unless required	
+  Backup iptables for server	
+  Change broadcast range for only our machines	
+
