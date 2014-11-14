@@ -1,0 +1,21 @@
+Change Passwords
+  Remove default or unused users
+MySQLdump all databases
+  mysql -u root -p
+  mysql> SHOW DATABASES;
+  mysqldump yourFirstDatabase -u user -ppassword > yourDatabase.sql 
+  mysql yourSecondDatabase -u user -ppassword < yourDatabase.sql
+Fix up /etc/php5/apache2/php.ini
+  disable_functions=exec,passthru,shell_exec,system,proc_open,popen,curl_exec,curl_multi_exec, parse_ini_file,show_source
+  allow_url_fopen=Off
+  allow_url_include=Off
+  Restart web service (service httpd restart or service apache2 restart normally)
+Firewall/portspoof/fail2ban
+  Turn off IPv6
+Patch
+Scan
+nmap cron job
+Monitor
+­Cron/AT
+Mess with Active Directory
+Install sysinternals (WIN)
