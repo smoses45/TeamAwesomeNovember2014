@@ -1,0 +1,20 @@
+Nessus
+  http://www.tenable.com/products/nessus/select-your-operating-system
+
+Microsoft Security Essentials
+  Windows 7 or Vista
+    http://windows.microsoft.com/en-us/windows/security-essentials-all-versions
+  Windows 8
+    Comes preinstalled as Windows Defender
+Sysinternals (Windows)
+  http://download.sysinternals.com/files/SysinternalsSuite.zip
+
+Nmap (if apt-get or yum doesn't work)
+  http://nmap.org/dist/nmap-6.47.tar.bz2
+  
+  bzip2 -cd nmap-6.47.tar.bz2 | tar xvf -
+  cd nmap-6.47
+  ./configure
+  make
+  su root
+  make install
