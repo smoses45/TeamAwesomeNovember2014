@@ -40,6 +40,12 @@ linux users
                                 	then prompts for old, then new twice
         	list them
                     	 cut -d : -f 1 /etc/passwd
+                    	        head -n 1 /etc/passwd | cut -d : -f 1 > accounts.txt
+			        tail /etc/passwd | cut -d : -f 1 >> accounts.txt
+			        while read p;
+                                do sudo passwd $p;
+                                done <accounts.txt
+        	
         	delete them
                     	delete user
                                 	sudo userdel <username>
