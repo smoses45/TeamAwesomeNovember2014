@@ -16,8 +16,11 @@ sudo make install
 sudo portspoof -c /etc/portspoof.conf -s /etc/portspoof_signatures -D
 ps -ef | grep spoof
 
-sudo touch runPortspoof
-sudo echo "sudo portspoof -c /etc/portspoof.conf -s /etc/portspoof_signatures -D" > runPortspoof
-
-echo "Now add the following line to the root crontab: "
-echo "@reboot /path/to/runPortspoof"
+echo ""
+echo "******************************************************************************"
+echo "* Put: sudo portspoof -c /etc/portspoof.conf -s /etc/portspoof_signatures -D *"
+echo "* into a file and make it executable.                                        *"
+echo "*                                                                            *"
+echo "* Then add the following line to the root crontab:                           *"
+echo "* @reboot /path/to/runPortspoof                                              *"
+echo "******************************************************************************"
