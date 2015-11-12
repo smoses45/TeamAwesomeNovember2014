@@ -21,6 +21,6 @@ echo "**************************************************************************
 echo "*  Put: sudo portspoof -c /etc/portspoof.conf -s /etc/portspoof_signatures -D  *"
 echo "*  into a file called runPortspoof and make it executable.                     *"
 echo "*                                                                              *"
-echo "*  Then add the following line to the root crontab:                            *"
+echo "*  Then add the following line to the root crontab (sudo crontab -e -u root):  *"
 echo "*  @reboot /path/to/runPortspoof                                               *"
 echo "********************************************************************************"
