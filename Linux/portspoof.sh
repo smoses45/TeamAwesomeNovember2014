@@ -1,5 +1,5 @@
-sudo apt-get install git
-sudo apt-get install g++
+sudo apt-get install -y git
+sudo apt-get install -y g++
 cd /usr/share
 sudo git clone https://github.com/drk1wi/portspoof
 cd portspoof/
