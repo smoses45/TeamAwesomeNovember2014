@@ -1,0 +1,90 @@
+Setting Policies and Setting Up Users Active Directory
+1.	Boot Up
+2.	Create New Accounts
+    a.	Click Start
+    b.	Search “Active Directory Users and Computers”
+    c.	In the Left Side Expand <MACHINE NAME> > Users
+    d.	Create A New User (Admin – Depending On Groups)
+        i.	Right Click In White Space
+        ii.	Select New -> User
+        iii.Fill Out the Info
+            1.	Name and Password
+            2.	Make Complex Password!( 8+ Char, 1 cap, 1 lower, 1 number/special)
+        iv.	Fill Out the password with appropriate complexity but uncheck needing to change the password at next login
+    v.	Finished
+    e.	Right Click the User and select Properties
+    f.	In the resulting window select the “Member Of” Tab   
+    g.	Click Add -> Advanced -> Find Now
+    h.	Select the groups you want to add them to
+    i.	Then apply your changes
+3.	It’s a good idea to log off then log back in using that newly created account
+4.	Disable Unneeded accounts
+    a.	WARNING: DO NOT REMOVE THE ADMIN OR GUEST ACCOUNTS!
+    b.	Open Active Directory
+    c.	Navigate to <COMPUTER NAME> -> Users 
+    d.	Right click the user and select Disable
+5.	Configure the Audit Policy
+    a.	Click Start
+    b.	Search “Group Policy Management”
+    c.	In the left pan navigate to Group Policy Management -> Forest:<SERVERNAME> -> Domains -> <SERVER> -> Group Policy Objects -> Default Domain Policy
+    d.	Right click that and select “Edit”
+    e.	This will open a new window
+    f.	Navigate to Default -> Computer Configuration -> Policies -> Windows Settings -> Security Settings -> Advanced Audit Policy -> Configuration -> Audit Policies
+    g.	Now in here you can select the handout and configure it how you would like to
+    h.	The following is an example
+    i.	Right click a policy and select “Properties”
+    j.	The Above Selected Account Logon -> Audit Credential Validation -> Properties
+    k.	In the Resulting Window select Configure the following audit events and “Failure”
+    l.	For the next in “Account Logon” Select “Audit Other Account Logon Events” and Properties
+    m.	Select to log on “Success” and “Failure”
+    n.	Configure the “Account Management” Policy
+        i.	Properties for “Audit Other Account Management Events”
+        ii.	Select “Success” and “Failure”
+        iii.	Properties for “Audit Security Group Management”
+        iv.	Select “Success” and “Failure”
+        v.	Properties for “Audit User Account Management”
+        vi.	Select “Success” and “Failure”
+    o.	Configure the “Logon/Logoff” Policy
+        i.	Properties for “Audi Account Lockout”
+        ii.	Select “Success” and “Failure”
+        iii.	Properties for “Audit Logoff”
+        iv.	Select “Success” and “Failure”
+        v.	Properties for “Audit Logon”
+        vi.	Select “Failure”
+        vii.	Properties for “Audit Other Logon/Logoff Events”
+        viii.	Select “Success” and “Failure”
+        ix.	Properties for “Audit Special Logon”
+        x.	Select “Success” and “Failure”
+    p.	Configure the “Object Access” Policy
+        i.	Properties for “Audit Kernel Object”
+        ii.	Select “Success” and “Failure”
+        iii.	Properties for “Audit Other Object Access Events”
+        iv.	Select “Success” and “Failure”
+        v.	Properties for “Audit Registry”
+        vi.	Select “Success” and “Failure”
+        vii.	Properties for “Audit SAM”
+        viii.	Select “Failure”
+    q.	Configure the “Policy Change” Policy
+        i.	Properties for “Audit Audit Policy Change”
+        ii.	Select “Success” and “Failure”
+        iii.	Properties for “Audit Authentication Policy Change”
+        iv.	Select “Success” and “Failure”
+        v.	Properties for “Audit Authorization Policy Change”
+        vi.	Select “Success” and “Failure”
+        vii.	Properties for “Audit Other Policy Change Events”
+        viii.	Select “Success” and “Failure”
+    r.	Configure “Privilege Use” Policy
+        i.	Properties for “Audit Non Sensitive Privilege Use”
+        ii.	Select “Success” and “Failure”
+        iii.	Properties for “Audit Other Privilege Use Events”
+        iv.	Select “Success” and “Failure”
+        v.	Properties for “Audit Sensitive Privilege Use”
+        vi.	Select “Success” and “Failure”
+    s.	Configure “System” Policy
+        i.	Properties for “Audit Other System Events”
+        ii.	Select “Success” and “Failure”
+        iii.	Properties for “Audit Security System Extension”
+        iv.	Select “Success” and “Failure”
+        v.	Properties for “Audit System Integrity”
+        vi.	Select “Failure”
+6.	Minimize the Default Domain Policy Window and The Group Policy Management Window
